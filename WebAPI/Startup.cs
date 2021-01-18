@@ -28,6 +28,7 @@ namespace WebAPI
         {
             services.AddSingleton<ICustomerRepository, CustomerRepository>();
             services.AddSingleton<IOrderRepository, OrderRepository>();
+            services.AddControllersWithViews().AddNewtonsoftJson();
 
             services.AddRazorPages()
         .AddRazorRuntimeCompilation();
@@ -47,10 +48,10 @@ namespace WebAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllerRoute(
+                    name:"default", 
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }
